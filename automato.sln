@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "automato", "automato\automato.csproj", "{66A8EDEF-0DEC-4972-BD0D-D80B0A790C6B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{89408BBD-B69C-422E-B690-23D47A0276C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "automato", "src\automato\automato.csproj", "{AF036FAC-710E-47F1-9F7D-C6AC03E4B358}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +13,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{66A8EDEF-0DEC-4972-BD0D-D80B0A790C6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66A8EDEF-0DEC-4972-BD0D-D80B0A790C6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66A8EDEF-0DEC-4972-BD0D-D80B0A790C6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66A8EDEF-0DEC-4972-BD0D-D80B0A790C6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF036FAC-710E-47F1-9F7D-C6AC03E4B358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF036FAC-710E-47F1-9F7D-C6AC03E4B358}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF036FAC-710E-47F1-9F7D-C6AC03E4B358}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF036FAC-710E-47F1-9F7D-C6AC03E4B358}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF036FAC-710E-47F1-9F7D-C6AC03E4B358} = {89408BBD-B69C-422E-B690-23D47A0276C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA263184-4BB2-422C-BBB8-7984281FC076}
