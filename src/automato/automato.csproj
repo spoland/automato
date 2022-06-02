@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\automato.Domain\automato.Domain.csproj" />
     <ProjectReference Include="..\automato.Infrastructure.LiteDB\automato.Infrastructure.LiteDB.csproj" />
   </ItemGroup>
 
