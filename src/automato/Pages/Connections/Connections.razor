@@ -6,9 +6,13 @@
 
 @inject IDialogService DialogService
 
+<PageTitle>Connections</PageTitle>
+<MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Connections</MudText>
+<MudText Typo="Typo.subtitle1" Align="Align.Center" Class="mb-10" Color="Color.Info">Add, edit and delete your server connections here.</MudText>
+
 <MudGrid>
     <MudItem xs="12">
-        <MudTable Items="@Elements" Dense="true" FixedHeader="@fixed_header" Hover="true" Height="@(fixed_header ? "500px":"")">
+        <MudTable  Items="@Elements" Dense="true" FixedHeader="@fixed_header" Hover="true" Height="@(fixed_header ? "500px":"")">
             <ColGroup>
                 <col />
                 <col />
@@ -41,16 +45,6 @@
     private IEnumerable<Connection> Elements = new List<Connection>
     {
         new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Rapidseedbox", portNumber: 2222, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Ubuntu Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "App Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Web Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "FTP Server", portNumber: 22, default),
-                new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Rapidseedbox", portNumber: 2222, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Ubuntu Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "App Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Web Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "FTP Server", portNumber: 22, default),
-                new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Rapidseedbox", portNumber: 2222, default),
         new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Ubuntu Server", portNumber: 22, default),
         new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "App Server", portNumber: 22, default),
         new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Web Server", portNumber: 22, default),

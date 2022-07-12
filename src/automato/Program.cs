@@ -1,4 +1,3 @@
-using automato.Data;
 using automato.Domain.Services.Connections;
 using automato.Infrastructure.LiteDB.Connections;
 using MudBlazor.Services;
@@ -8,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddMudServices();
 builder.Services.AddTransient<IConnectionRepository, ConnectionRepository>();
 
@@ -18,6 +16,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
+
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
