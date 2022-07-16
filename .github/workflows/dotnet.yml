@@ -32,5 +32,8 @@ jobs:
         args: >
           -Dsonar.organization=spoland
           -Dsonar.projectKey=spoland-automato
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     - name: Build the Docker image
       run: docker build . --file src/automato/Dockerfile --tag my-image-name:$(date +%s)
