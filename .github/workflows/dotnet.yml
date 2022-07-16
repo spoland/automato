@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x
+    - name: Install dotnet-coverage
+      run: dotnet tool install --global dotnet-coverage
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
