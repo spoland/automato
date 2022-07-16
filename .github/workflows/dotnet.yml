@@ -19,21 +19,11 @@ jobs:
         dotnet-version: 6.x
     - name: Install dotnet-coverage
       run: dotnet tool install --global dotnet-coverage
+    - name: Install Sonar Scanner
+      run: dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner --version 4.8.0
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
-    - name: Analyze with SonarCloud
-      uses: sonarsource/sonarcloud-github-action@master
-      with:
-        projectBaseDir: .
-        args: >
-          -Dsonar.organization=spoland
-          -Dsonar.projectKey=spoland-automato
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    - name: Build the Docker image
-      run: docker build . --file src/automato/Dockerfile --tag my-image-name:$(date +%s)
