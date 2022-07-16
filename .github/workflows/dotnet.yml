@@ -20,10 +20,14 @@ jobs:
     - name: Install dotnet-coverage
       run: dotnet tool install --global dotnet-coverage
     - name: Install Sonar Scanner
-      run: dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner --version 4.8.0
+      run: dotnet tool install --global dotnet-sonarscanner
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
+      env:
+          # Needed to get some information about the pull request, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+          dotnet-sonarscanner begin /k:"spoland-automato" /o:"spoland" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet-coverage collect 'dotnet test' -f xml -o 'coverage.xml'
+          dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
