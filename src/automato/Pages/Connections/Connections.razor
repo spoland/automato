@@ -2,9 +2,11 @@
 
 @using System.Net.Http.Json
 @using automato.Domain.Connections
+@using automato.Domain.Services.Connections
 @using automato.Domain.Sftp
 
 @inject IDialogService DialogService
+@inject IConnectionRepository _connectionRepository;
 
 <MudGrid>
 
@@ -37,14 +39,14 @@
 
     bool fixed_header = true;
 
-    private IEnumerable<Connection> ConnectionList = new List<Connection>
+    private IEnumerable<Connection> ConnectionList = Enumerable.Empty<Connection>();
+
+    protected override async Task OnInitializedAsync()
     {
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Rapidseedbox", portNumber: 2222, details: default, sshHostKeyFingerprint: default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Ubuntu Server", portNumber: 22, details: default, sshHostKeyFingerprint: default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "App Server", portNumber: 22, details: "Test application server.", sshHostKeyFingerprint: default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Web Server", portNumber: 22, details: default, sshHostKeyFingerprint: default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "FTP Server", portNumber: 22, details: default, sshHostKeyFingerprint: default)
-    };
+        ConnectionList = await _connectionRepository.GetAll(default);
+
+        await base.OnInitializedAsync();
+    }
 
     private void DeleteConnection()
     {
