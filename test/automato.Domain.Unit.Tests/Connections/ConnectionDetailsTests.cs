@@ -5,13 +5,23 @@ namespace automato.Domain.Unit.Tests.Actions;
 public class ConnectionDetailsTests
 {
     [Fact]
-    public void FromString_ShouldCreateNewInstance()
+    public void FromString_WhenValidString_ShouldCreateNewInstance()
     {
         // Act
         var sut = ConnectionDetails.FromString("details");
 
         // Assert
         Assert.Equal("details", sut.Value);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("    ")]
+    [InlineData(null)]
+    public void FromString_WhenInvalidString_ShouldThrow(string? value)
+    {
+        // Assert
+        Assert.Throws<ArgumentException>(() => ConnectionDetails.FromString(value!));
     }
 
     [Fact]
@@ -32,5 +42,15 @@ public class ConnectionDetailsTests
 
         // Assert
         Assert.Equal("details", sut.Value);
+    }
+
+    [Fact]
+    public void ToString_ShouldReturnValueString()
+    {
+        // Arrange
+        ConnectionDetails sut = "details";
+
+        // Assert
+        Assert.Equal("details", sut.ToString());
     }
 }

@@ -4,9 +4,9 @@ public record ConnectionDetails
 {
     public static ConnectionDetails FromString(string value)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrWhiteSpace(value))
         {
-            throw new ArgumentException("A connection name can not be empty.", nameof(value));
+            throw new ArgumentException("Connection details can not be empty.", nameof(value));
         }
 
         return new ConnectionDetails { Value = value };
