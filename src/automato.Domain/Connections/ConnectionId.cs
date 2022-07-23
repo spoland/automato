@@ -1,4 +1,6 @@
-﻿namespace automato.Domain.Connections;
+﻿using System.Runtime.CompilerServices;
+
+namespace automato.Domain.Connections;
 
 public class ConnectionId : ValueObject
 {

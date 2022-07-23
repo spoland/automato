@@ -1,5 +1,4 @@
 using automato.Domain.Services.Connections;
-using automato.Infrastructure.LiteDB.Connections;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
-builder.Services.AddTransient<IConnectionRepository, ConnectionRepository>();
+builder.Services.AddTransient<IConnectionRepository, InMemoryConnectionRepository>();
 
 var app = builder.Build();
 

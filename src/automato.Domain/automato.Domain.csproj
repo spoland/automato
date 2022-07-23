@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>automato.Domain.Unit.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\automato.Framework\automato.Framework.csproj" />
   </ItemGroup>
