@@ -6,49 +6,40 @@
 
 @inject IDialogService DialogService
 
-<PageTitle>Connections</PageTitle>
-<MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Connections</MudText>
-<MudText Typo="Typo.subtitle1" Align="Align.Center" Class="mb-10" Color="Color.Info">Add, edit and delete your server connections here.</MudText>
-
 <MudGrid>
-    <MudItem xs="12">
-        <MudTable  Items="@Elements" Dense="true" FixedHeader="@fixed_header" Hover="true" Height="@(fixed_header ? "500px":"")">
-            <ColGroup>
-                <col />
-                <col />
-                <col style="width: 150px;" />
-            </ColGroup>
-            <HeaderContent>
-                <MudTh>Name</MudTh>
-                <MudTh>Type</MudTh>
-                <MudTh></MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Name">@context.Name</MudTd>
-                <MudTd DataLabel="Type">SFTP</MudTd>
-                <MudTd Style="text-align:center">
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" aria-label="edit"></MudIconButton>
-                    <MudIconButton @onclick="DeleteConnection" Icon="@Icons.Material.Filled.Delete" aria-label="delete"></MudIconButton>
-                </MudTd>
-            </RowTemplate>
-        </MudTable>
-    </MudItem>
-    <MudItem xs="12" Class="d-flex flex-row-reverse gap-2">
-        <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" object-right />
-    </MudItem>
+
+    @foreach (var connection in ConnectionList)
+    {
+        <MudItem xs="3">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">@connection.Name</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Secondary">Test</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    }
+
 </MudGrid>
 
 @code {
 
     bool fixed_header = true;
 
-    private IEnumerable<Connection> Elements = new List<Connection>
+    private IEnumerable<Connection> ConnectionList = new List<Connection>
     {
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Rapidseedbox", portNumber: 2222, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Ubuntu Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "App Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Web Server", portNumber: 22, default),
-        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "FTP Server", portNumber: 22, default)
+        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Rapidseedbox", portNumber: 2222, details: default, sshHostKeyFingerprint: default),
+        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Ubuntu Server", portNumber: 22, details: default, sshHostKeyFingerprint: default),
+        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "App Server", portNumber: 22, details: "Test application server.", sshHostKeyFingerprint: default),
+        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "Web Server", portNumber: 22, details: default, sshHostKeyFingerprint: default),
+        new SftpConnection(id: ConnectionId.New(), hostname: "1234", username: "spoland", password: "password", name: "FTP Server", portNumber: 22, details: default, sshHostKeyFingerprint: default)
     };
 
     private void DeleteConnection()
@@ -58,11 +49,11 @@
         parameters.Add("ButtonText", "Delete");
         parameters.Add("Color", Color.Error);
 
-        var options = new DialogOptions() 
-        {
-            NoHeader = true,
-            MaxWidth = MaxWidth.ExtraSmall
-        };
+        var options = new DialogOptions()
+            {
+                NoHeader = true,
+                MaxWidth = MaxWidth.ExtraSmall
+            };
 
         DialogService.Show<ConfirmationDialog>("Delete", parameters, options);
     }

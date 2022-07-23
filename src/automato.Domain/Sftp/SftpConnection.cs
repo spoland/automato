@@ -11,8 +11,10 @@ public class SftpConnection : Connection
         Password password,
         ConnectionName name,
         PortNumber portNumber,
-        SshHostKeyFingerprint? sshHostKeyFingerprint) : base(id, name)
+        ConnectionDetails? details,
+        SshHostKeyFingerprint? sshHostKeyFingerprint) : base(id, name, details)
     {
+        Details = details;
         Hostname = hostname;
         Username = username;
         Password = password;
