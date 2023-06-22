@@ -6,7 +6,7 @@ namespace automato.Domain.Unit.Tests.SFTP;
 public class SftpServerTests
 {
     [Fact]
-    public void Create_WhenValidParameters_ShouldCreate()
+    public void Create_WhenValidParameters_ShouldReturnSuccessfulResult()
     {
         // Arrange
         var result = SftpServer.Create(
