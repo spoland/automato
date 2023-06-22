@@ -7,12 +7,40 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5E6DBCCC-71E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1F2F6E8B-0CAC-4F09-9A59-42C06AEA0434}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "automato.Domain.Unit.Tests", "test\automato.Domain.Unit.Tests\automato.Domain.Unit.Tests.csproj", "{97B90C5C-932F-4204-91DD-4F9D5F1C9343}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "automato.Domain", "src\automato.Domain\automato.Domain.csproj", "{00CC6904-6355-4A00-84CE-DA214D8AE1B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "automato.Tests.Common", "test\automato.Tests.Common\automato.Tests.Common.csproj", "{300BE85F-75F2-47B6-8CF2-BBA447DF0633}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97B90C5C-932F-4204-91DD-4F9D5F1C9343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97B90C5C-932F-4204-91DD-4F9D5F1C9343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97B90C5C-932F-4204-91DD-4F9D5F1C9343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97B90C5C-932F-4204-91DD-4F9D5F1C9343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00CC6904-6355-4A00-84CE-DA214D8AE1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00CC6904-6355-4A00-84CE-DA214D8AE1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00CC6904-6355-4A00-84CE-DA214D8AE1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00CC6904-6355-4A00-84CE-DA214D8AE1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{300BE85F-75F2-47B6-8CF2-BBA447DF0633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{300BE85F-75F2-47B6-8CF2-BBA447DF0633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{300BE85F-75F2-47B6-8CF2-BBA447DF0633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{300BE85F-75F2-47B6-8CF2-BBA447DF0633}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{97B90C5C-932F-4204-91DD-4F9D5F1C9343} = {1F2F6E8B-0CAC-4F09-9A59-42C06AEA0434}
+		{00CC6904-6355-4A00-84CE-DA214D8AE1B1} = {5E6DBCCC-71E0-4EFC-BEF1-460596ABC7D8}
+		{300BE85F-75F2-47B6-8CF2-BBA447DF0633} = {1F2F6E8B-0CAC-4F09-9A59-42C06AEA0434}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F4A1D012-A31D-40A3-B779-14ACBD9AD77F}
 	EndGlobalSection
 EndGlobal
