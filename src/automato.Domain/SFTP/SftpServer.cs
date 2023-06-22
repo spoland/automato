@@ -1,4 +1,4 @@
-﻿using automato.Domain.Abstractions;
+﻿using automato.Domain.Framework;
 
 namespace automato.Domain.SFTP;
 
