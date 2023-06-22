@@ -1,3 +1,4 @@
+using automato.Domain.Framework;
 using automato.Domain.SFTP;
 
 namespace automato.Domain.Unit.Tests.SFTP;
@@ -8,7 +9,7 @@ public class SftpServerTests
     public void Create_WhenValidParameters_ShouldCreate()
     {
         // Arrange
-        var sftpServer = SftpServer.Create(
+        var result = SftpServer.Create(
             name: "name",
             hostname: "hostname",
             username: "username",
@@ -16,87 +17,32 @@ public class SftpServerTests
             port: 22);
 
         // Assert
-        sftpServer.Port.Should().Be(22);
-        sftpServer.Name.Should().Be("name");
-        sftpServer.Password.Should().Be("password");
-        sftpServer.Username.Should().Be("username");
-        sftpServer.Hostname.Should().Be("hostname");
-    }
-
-    [Fact]
-    public void Create_WhenNameIsNullOrWhitespace_ShouldThrow()
-    {
-        // Arrange
-        Action act = () => SftpServer.Create(
-            name: null!,
-            hostname: "hostname",
-            username: "username",
-            password: "password",
-            port: 22);
-
-        // Assert
-        act.Should().Throw<ArgumentNullException>();
-    }
-
-    [Fact]
-    public void Create_WhenHostnameIsNullOrWhitespace_ShouldThrow()
-    {
-        // Arrange
-        Action act = () => SftpServer.Create(
-            name: "name",
-            hostname: null!,
-            username: "username",
-            password: "password",
-            port: 22);
-
-        // Assert
-        act.Should().Throw<ArgumentNullException>();
-    }
-
-    [Fact]
-    public void Create_WhenUsernameIsNullOrWhitespace_ShouldThrow()
-    {
-        // Arrange
-        Action act = () => SftpServer.Create(
-            name: "name",
-            hostname: "hostname",
-            username: null!,
-            password: "password",
-            port: 22);
-
-        // Assert
-        act.Should().Throw<ArgumentNullException>();
-    }
-
-    [Fact]
-    public void Create_WhenPasswordIsNullOrWhitespace_ShouldThrow()
-    {
-        // Arrange
-        Action act = () => SftpServer.Create(
-            name: "name",
-            hostname: "hostname",
-            username: "username",
-            password: null!,
-            port: 22);
-
-        // Assert
-        act.Should().Throw<ArgumentNullException>();
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+        result.Value?.Port.Should().Be(22);
+        result.Value?.Name.Should().Be("name");
+        result.Value?.Password.Should().Be("password");
+        result.Value?.Username.Should().Be("username");
+        result.Value?.Hostname.Should().Be("hostname");
     }
 
     [Theory]
-    [InlineData(0)]
-    [InlineData(-1)]
-    public void Create_WhenPortIsLessThanOrEqualToZero_ShouldThrow(int port)
+    [InlineData(null, 0)]
+    [InlineData("", -1)]
+    [InlineData(" ", 0)]
+    public void Create_WhenInvalid_ShouldReturnFailedResult(string badString, int port)
     {
         // Arrange
-        Action act = () => SftpServer.Create(
-            port: port,
-            name: "name",
-            hostname: "hostname",
-            username: "username",
-            password: "password");
+        var result = SftpServer.Create(
+            name: badString,
+            hostname: badString,
+            username: badString,
+            password: badString,
+            port: port);
 
         // Assert
-        act.Should().Throw<ArgumentOutOfRangeException>();
+        result.IsSuccess.Should().BeFalse();
+        result.Exceptions.Should().NotBeEmpty();
+        result.Exceptions.Should().HaveCount(5);
     }
 }

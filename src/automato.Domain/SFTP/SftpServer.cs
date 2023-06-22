@@ -4,45 +4,62 @@ namespace automato.Domain.SFTP;
 
 public class SftpServer : IEntity
 {
-    public static SftpServer Create(
+    public static Result<SftpServer> Create(
         int port,
         string name,
         string hostname,
         string username,
         string password)
     {
+        List<ValidationException> exceptions = new();
+
         if (string.IsNullOrWhiteSpace(name))
         {
-            throw new ArgumentNullException(nameof(name), "Name must not be null or whitespace.");
+            exceptions.Add(new ValidationException(
+                propertyName: nameof(Name),
+                message: "Name must not be null or whitespace."));
         }
 
         if (string.IsNullOrWhiteSpace(hostname))
         {
-            throw new ArgumentNullException(nameof(hostname), "Hostname must not be null or whitespace.");
+            exceptions.Add(new ValidationException(
+                propertyName: nameof(Hostname),
+                message: "Hostname must not be null or whitespace."));
         }
 
         if (string.IsNullOrWhiteSpace(username))
         {
-            throw new ArgumentNullException(nameof(username), "Username must not be null or whitespace.");
+            exceptions.Add(item: new ValidationException(
+                nameof(Username),
+                message: "Username must not be null or whitespace."));
         }
 
         if (string.IsNullOrWhiteSpace(password))
         {
-            throw new ArgumentNullException(nameof(password), "Password must not be null or whitespace.");
+            exceptions.Add(new ValidationException(
+                propertyName: nameof(Password),
+                message: "Password must not be null or whitespace."));
         }
 
         if (port <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(port), "Port must be greater than or equal to 0.");
+            exceptions.Add(new ValidationException(
+                propertyName: nameof(Port),
+                message: "Port must be greater than or equal to 0."));
         }
 
-        return new SftpServer(
-            port: port,
-            name: name,
-            hostname: hostname,
-            username: username,
-            password: password,
-            id: Guid.NewGuid().ToString());
+        if (!exceptions.Any())
+        {
+            return new SftpServer(
+                port: port,
+                name: name,
+                hostname: hostname,
+                username: username,
+                password: password,
+                id: Guid.NewGuid().ToString());
+        }
+
+        return exceptions;
     }
 
     public string Id { get; }
