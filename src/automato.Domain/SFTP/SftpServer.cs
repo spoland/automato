@@ -30,7 +30,7 @@ public class SftpServer : IEntity
         if (string.IsNullOrWhiteSpace(username))
         {
             exceptions.Add(item: new ValidationException(
-                nameof(Username),
+                propertyName: nameof(Username),
                 message: "Username must not be null or whitespace."));
         }
 
