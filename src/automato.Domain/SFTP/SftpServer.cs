@@ -17,35 +17,35 @@ public class SftpServer : IEntity
         {
             exceptions.Add(new ValidationException(
                 propertyName: nameof(Name),
-                message: "Name must not be null or whitespace."));
+                message: $"{nameof(Name)} must not be null or whitespace."));
         }
 
         if (string.IsNullOrWhiteSpace(hostname))
         {
             exceptions.Add(new ValidationException(
                 propertyName: nameof(Hostname),
-                message: "Hostname must not be null or whitespace."));
+                message: $"{nameof(Hostname)} must not be null or whitespace."));
         }
 
         if (string.IsNullOrWhiteSpace(username))
         {
             exceptions.Add(item: new ValidationException(
                 propertyName: nameof(Username),
-                message: "Username must not be null or whitespace."));
+                message: $"{nameof(Username)} must not be null or whitespace."));
         }
 
         if (string.IsNullOrWhiteSpace(password))
         {
             exceptions.Add(new ValidationException(
                 propertyName: nameof(Password),
-                message: "Password must not be null or whitespace."));
+                message: $"{nameof(Password)} must not be null or whitespace."));
         }
 
         if (port <= 0)
         {
             exceptions.Add(new ValidationException(
                 propertyName: nameof(Port),
-                message: "Port must be greater than 0."));
+                message: $"{nameof(Port)} must be greater than 0."));
         }
 
         if (!exceptions.Any())
