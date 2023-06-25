@@ -45,7 +45,7 @@ public class SftpServer : IEntity
         {
             exceptions.Add(new ValidationException(
                 propertyName: nameof(Port),
-                message: "Port must be greater than or equal to 0."));
+                message: "Port must be greater than 0."));
         }
 
         if (!exceptions.Any())

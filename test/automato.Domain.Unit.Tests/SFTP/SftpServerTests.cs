@@ -34,11 +34,11 @@ public class SftpServerTests
     {
         // Arrange
         var result = SftpServer.Create(
+            port: port,
             name: badString,
             hostname: badString,
             username: badString,
-            password: badString,
-            port: port);
+            password: badString);
 
         // Assert
         result.IsSuccess.Should().BeFalse();
