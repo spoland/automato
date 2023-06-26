@@ -43,6 +43,6 @@ public class SftpServerTests
         // Assert
         result.IsSuccess.Should().BeFalse();
         result.Exceptions.Should().NotBeEmpty();
-        result.Exceptions.Should().HaveCount(5);
+        result.Exceptions.Should().HaveCount(4);
     }
 }

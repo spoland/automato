@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5E6DBCCC-71E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1F2F6E8B-0CAC-4F09-9A59-42C06AEA0434}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "automato.Domain.Unit.Tests", "test\automato.Domain.Unit.Tests\automato.Domain.Unit.Tests.csproj", "{97B90C5C-932F-4204-91DD-4F9D5F1C9343}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "automato.Domain.Unit.Tests", "test\automato.Domain.Unit.Tests\automato.Domain.Unit.Tests.csproj", "{97B90C5C-932F-4204-91DD-4F9D5F1C9343}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "automato.Domain", "src\automato.Domain\automato.Domain.csproj", "{00CC6904-6355-4A00-84CE-DA214D8AE1B1}"
 EndProject
@@ -18,6 +18,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "automato.Domain.Services", "src\automato.Domain.Services\automato.Domain.Services.csproj", "{EFBF071F-53F6-49E2-8383-E8C5C36F1248}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "automato.Infrastructure.SshNet", "src\automato.Infrastructure.SshNet\automato.Infrastructure.SshNet.csproj", "{C208BECE-F43B-4280-BFFE-6541C014FDA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "automato.App", "src\automato.App\automato.App.csproj", "{7937EABB-47EE-4889-83C9-D19B42FF5CDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{00CC6904-6355-4A00-84CE-DA214D8AE1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00CC6904-6355-4A00-84CE-DA214D8AE1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00CC6904-6355-4A00-84CE-DA214D8AE1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFBF071F-53F6-49E2-8383-E8C5C36F1248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFBF071F-53F6-49E2-8383-E8C5C36F1248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFBF071F-53F6-49E2-8383-E8C5C36F1248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFBF071F-53F6-49E2-8383-E8C5C36F1248}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C208BECE-F43B-4280-BFFE-6541C014FDA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C208BECE-F43B-4280-BFFE-6541C014FDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C208BECE-F43B-4280-BFFE-6541C014FDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C208BECE-F43B-4280-BFFE-6541C014FDA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7937EABB-47EE-4889-83C9-D19B42FF5CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7937EABB-47EE-4889-83C9-D19B42FF5CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7937EABB-47EE-4889-83C9-D19B42FF5CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7937EABB-47EE-4889-83C9-D19B42FF5CDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +58,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{97B90C5C-932F-4204-91DD-4F9D5F1C9343} = {1F2F6E8B-0CAC-4F09-9A59-42C06AEA0434}
 		{00CC6904-6355-4A00-84CE-DA214D8AE1B1} = {5E6DBCCC-71E0-4EFC-BEF1-460596ABC7D8}
+		{EFBF071F-53F6-49E2-8383-E8C5C36F1248} = {5E6DBCCC-71E0-4EFC-BEF1-460596ABC7D8}
+		{C208BECE-F43B-4280-BFFE-6541C014FDA8} = {5E6DBCCC-71E0-4EFC-BEF1-460596ABC7D8}
+		{7937EABB-47EE-4889-83C9-D19B42FF5CDF} = {5E6DBCCC-71E0-4EFC-BEF1-460596ABC7D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F4A1D012-A31D-40A3-B779-14ACBD9AD77F}

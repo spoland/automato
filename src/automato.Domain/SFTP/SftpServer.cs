@@ -9,7 +9,7 @@ public class SftpServer : IEntity
         string name,
         string hostname,
         string username,
-        string password)
+        string? password)
     {
         List<ValidationException> exceptions = new();
 
@@ -34,13 +34,6 @@ public class SftpServer : IEntity
                 message: $"{nameof(Username)} must not be null or whitespace."));
         }
 
-        if (string.IsNullOrWhiteSpace(password))
-        {
-            exceptions.Add(new ValidationException(
-                propertyName: nameof(Password),
-                message: $"{nameof(Password)} must not be null or whitespace."));
-        }
-
         if (port <= 0)
         {
             exceptions.Add(new ValidationException(
@@ -55,7 +48,7 @@ public class SftpServer : IEntity
                 name: name,
                 hostname: hostname,
                 username: username,
-                password: password,
+                password: password ?? "",
                 id: Guid.NewGuid().ToString());
         }
 
