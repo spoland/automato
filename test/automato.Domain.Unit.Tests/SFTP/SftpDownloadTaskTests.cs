@@ -11,14 +11,15 @@ public class SftpDownloadTaskTests
         var result = SftpDownloadTask.Create(
             name: "name",
             localPath: "local",
-            remotePath: "remote",
-            sftpServerId: "serverid");
+            remotePath: "/remote",
+            sftpServerId: "serverid",
+            searchPattern: @"\b[M]\w+");
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         result.Value?.Name.Should().Be("name");
         result.Value?.LocalPath.Should().Be("local");
-        result.Value?.RemotePath.Should().Be("remote");
+        result.Value?.RemotePath.Should().Be("/remote");
         result.Value?.SftpServerId.Should().Be("serverid");
     }
 
@@ -33,10 +34,11 @@ public class SftpDownloadTaskTests
             name: value,
             localPath: value,
             remotePath: value,
+            searchPattern: "[",
             sftpServerId: value);
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Exceptions.Should().HaveCount(4);
+        result.Exceptions.Should().HaveCount(5);
     }
 }

@@ -1,4 +1,5 @@
-﻿using automato.Domain.Services.SFTP;
+﻿using System.Text.RegularExpressions;
+using automato.Domain.Services.SFTP;
 using automato.Domain.SFTP;
 using Microsoft.Extensions.Logging;
 using Renci.SshNet;
@@ -25,12 +26,10 @@ public class SshNetSftpService : ISftpService
             username: server.Username,
             authenticationMethods: new PasswordAuthenticationMethod(username: server.Username, password: server.Password ?? string.Empty));
 
-        var remotePath = Path.GetDirectoryName(task.RemotePath)?.Replace('\\', '/') ?? "/";
-
         using var sftpClient = new SftpClient(connectionInfo);
 
         sftpClient.Connect();
-        var remoteFiles = GetFiles(sftpClient, remotePath).ToList();
+        var remoteFiles = await ListDirectoryAsync(sftpClient, task);
 
         foreach (var file in remoteFiles)
         {
@@ -38,45 +37,26 @@ public class SshNetSftpService : ISftpService
 
             if (!Directory.Exists(Path.GetDirectoryName(localFilePath)))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(localFilePath)!); // use a directory value object
+                _ = Directory.CreateDirectory(Path.GetDirectoryName(localFilePath)!); // use a directory value object
             }
 
             using var fileStream = File.Create(localFilePath);
 
-            await Task.Factory.FromAsync(
-                asyncResult: sftpClient.BeginDownloadFile(
-                    path: file.FullName,
-                    output: fileStream,
-                    asyncCallback: null,
-                    state: null,
-                    downloadCallback: (downloaded) => PrintProgress((int)downloaded, (int)file.Attributes.Size, file.Name)),
-                endMethod: sftpClient.EndDownloadFile);
+            await sftpClient.DownloadFileAsync(file.FullName, fileStream, (downloaded) => PrintProgress((int)downloaded, file));
         }
     }
 
-    private void PrintProgress(int downloaded, int total, string fileName)
+    private static async Task<IEnumerable<SftpFile>> ListDirectoryAsync(SftpClient sftpClient, SftpDownloadTask task)
     {
-        _logger.LogInformation("Downloading file {FileName}, progress: {Downloaded}%", fileName, (downloaded / (double)total * 100).ToString("0.00"));
+        var files = await sftpClient.ListDirectoryAsync(task.RemotePath);
+
+        return files
+            .Where(f => f.FullName != "." && f.FullName != "..")
+            .Where(f => Regex.IsMatch(f.Name, task.SearchPattern ?? string.Empty));
     }
 
-    private IEnumerable<SftpFile> GetFiles(SftpClient sftpClient, string remotePath)
+    private void PrintProgress(int downloaded, SftpFile sftpFile)
     {
-        var files = sftpClient.ListDirectory(remotePath);
-
-        foreach (var file in files.Where(f => f.Name != "." && f.Name != ".."))
-        {
-            if (file.IsDirectory)
-            {
-                var subFiles = GetFiles(sftpClient, file.FullName);
-                foreach (var subFile in subFiles)
-                {
-                    yield return subFile;
-                }
-            }
-            else
-            {
-                yield return file;
-            }
-        }
+        _logger.LogInformation("Downloading file {FileName}, progress: {Downloaded}%", sftpFile.Name, (downloaded / (double)sftpFile.Attributes.Size * 100).ToString("0.00"));
     }
 }
