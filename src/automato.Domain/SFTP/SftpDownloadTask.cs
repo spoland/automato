@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using automato.Domain.Framework;
 
 namespace automato.Domain.SFTP;
@@ -11,6 +10,8 @@ public class SftpDownloadTask : IEntity
         string localPath,
         string remotePath,
         string sftpServerId,
+        bool deleteDownloadedFiles,
+        bool deleteEmptyDirectories,
         string? searchPattern = default)
     {
         List<ValidationException> exceptions = new();
@@ -66,7 +67,9 @@ public class SftpDownloadTask : IEntity
                 remotePath: remotePath,
                 sftpServerId: sftpServerId,
                 searchPattern: searchPattern,
-                id: Guid.NewGuid().ToString());
+                id: Guid.NewGuid().ToString(),
+                deleteDownloadedFiles: deleteDownloadedFiles,
+                deleteEmptyDirectories: deleteEmptyDirectories);
         }
 
         return exceptions;
@@ -87,13 +90,25 @@ public class SftpDownloadTask : IEntity
     /// </summary>
     public string? SearchPattern { get; }
 
+    /// <summary>
+    /// Delete files that have been downloaded from the server.
+    /// </summary>
+    public bool DeleteDownloadedFiles { get; }
+
+    /// <summary>
+    /// Deletes empty directories after downloading files.
+    /// </summary>
+    public bool DeleteEmptyDirectories { get; }
+
     private SftpDownloadTask(
         string id,
         string name,
         string localPath,
         string remotePath,
         string sftpServerId,
-        string? searchPattern)
+        string? searchPattern,
+        bool deleteDownloadedFiles,
+        bool deleteEmptyDirectories)
     {
         Id = id;
         Name = name;
@@ -101,5 +116,7 @@ public class SftpDownloadTask : IEntity
         RemotePath = remotePath;
         SftpServerId = sftpServerId;
         SearchPattern = searchPattern;
+        DeleteDownloadedFiles = deleteDownloadedFiles;
+        DeleteEmptyDirectories = deleteEmptyDirectories;
     }
 }

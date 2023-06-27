@@ -13,7 +13,9 @@ public class SftpDownloadTaskTests
             localPath: "local",
             remotePath: "/remote",
             sftpServerId: "serverid",
-            searchPattern: @"\b[M]\w+");
+            searchPattern: @"\b[M]\w+",
+            deleteDownloadedFiles: true,
+            deleteEmptyDirectories: true);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
@@ -21,6 +23,8 @@ public class SftpDownloadTaskTests
         result.Value?.LocalPath.Should().Be("local");
         result.Value?.RemotePath.Should().Be("/remote");
         result.Value?.SftpServerId.Should().Be("serverid");
+        result.Value?.DeleteDownloadedFiles.Should().BeTrue();
+        result.Value?.DeleteEmptyDirectories.Should().BeTrue();
     }
 
     [Theory]
@@ -35,7 +39,9 @@ public class SftpDownloadTaskTests
             localPath: value,
             remotePath: value,
             searchPattern: "[",
-            sftpServerId: value);
+            sftpServerId: value,
+            deleteDownloadedFiles: false,
+            deleteEmptyDirectories: false);
 
         // Assert
         result.IsSuccess.Should().BeFalse();

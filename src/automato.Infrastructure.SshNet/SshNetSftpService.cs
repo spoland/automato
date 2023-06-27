@@ -20,39 +20,83 @@ public class SshNetSftpService : ISftpService
     {
         _logger.LogInformation("Starting SFTP download task '{TaskName}'", task.Name);
 
-        var connectionInfo = new ConnectionInfo(
+        try
+        {
+            var connectionInfo = new ConnectionInfo(
             port: server.Port,
             host: server.Hostname,
             username: server.Username,
             authenticationMethods: new PasswordAuthenticationMethod(username: server.Username, password: server.Password ?? string.Empty));
 
-        using var sftpClient = new SftpClient(connectionInfo);
+            using var sftpClient = new SftpClient(connectionInfo);
 
-        sftpClient.Connect();
-        var remoteFiles = await ListDirectoryAsync(sftpClient, task);
+            sftpClient.ErrorOccurred += (sender, args) =>
+                _logger.LogError(args.Exception, "An SFTP error occurred while processing task '{TaskName}': {Message}", task.Name, args.Exception.Message);
 
-        foreach (var file in remoteFiles)
-        {
-            var localFilePath = Path.Combine(task.LocalPath, file.FullName.Replace(task.RemotePath, ""));
+            sftpClient.Connect();
+            var remoteFiles = await ListDirectoryAsync(sftpClient, task.RemotePath, task.SearchPattern);
 
-            if (!Directory.Exists(Path.GetDirectoryName(localFilePath)))
+            foreach (var file in remoteFiles.Where(rf => !rf.IsDirectory))
             {
-                _ = Directory.CreateDirectory(Path.GetDirectoryName(localFilePath)!); // use a directory value object
+                cancellationToken.ThrowIfCancellationRequested();
+
+                var localFilePath = Path.Combine(task.LocalPath, file.FullName.Replace(task.RemotePath, ""));
+
+                if (!Directory.Exists(Path.GetDirectoryName(localFilePath)))
+                {
+                    _ = Directory.CreateDirectory(Path.GetDirectoryName(localFilePath)!); // use a directory value object
+                }
+
+                using var fileStream = File.Create(localFilePath);
+
+                await sftpClient.DownloadFileAsync(file.FullName, fileStream, (downloaded) => PrintProgress((int)downloaded, file));
+
+                if (task.DeleteDownloadedFiles)
+                {
+                    sftpClient.DeleteFile(file.FullName);
+                    _logger.LogInformation("Deleted downloaded file '{FileName}' from server.", file.FullName);
+                }
             }
 
-            using var fileStream = File.Create(localFilePath);
+            if (task.DeleteEmptyDirectories)
+            {
+                foreach (var directory in remoteFiles.Where(rf => rf.IsDirectory))
+                {
+                    var filesInDirectory = await ListDirectoryAsync(sftpClient, directory.FullName, task.SearchPattern);
 
-            await sftpClient.DownloadFileAsync(file.FullName, fileStream, (downloaded) => PrintProgress((int)downloaded, file));
+                    if (!filesInDirectory.Any())
+                    {
+                        sftpClient.DeleteDirectory(directory.FullName);
+                        _logger.LogInformation("Deleted empty directory '{Directory}' from server.", directory.FullName);
+                    }
+                }
+            }
+
+            sftpClient.Disconnect();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "An error occurred while processing task '{TaskName}': {Message}", task.Name, e.Message);
         }
     }
 
-    private static async Task<IEnumerable<SftpFile>> ListDirectoryAsync(SftpClient sftpClient, SftpDownloadTask task)
+    private static async Task<IEnumerable<SftpFile>> ListDirectoryAsync(SftpClient sftpClient, string remotePath, string? searchPattern)
     {
-        var files = await sftpClient.ListDirectoryAsync(task.RemotePath);
+        var directoryList = await sftpClient.ListDirectoryAsync(remotePath);
 
-        return files
-            .Where(f => f.FullName != "." && f.FullName != "..")
-            .Where(f => Regex.IsMatch(f.Name, task.SearchPattern ?? string.Empty));
+        directoryList = directoryList
+            .Where(f => f.Name != "." && f.Name != "..")
+            .Where(f => Regex.IsMatch(f.Name, searchPattern ?? string.Empty));
+
+        foreach (var file in directoryList)
+        {
+            if (file.IsDirectory)
+            {
+                directoryList = directoryList.Concat(await ListDirectoryAsync(sftpClient, file.FullName, searchPattern));
+            }
+        }
+
+        return directoryList;
     }
 
     private void PrintProgress(int downloaded, SftpFile sftpFile)
