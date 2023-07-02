@@ -1,4 +1,4 @@
-using automato.App.Data;
+using automato.App.Weather;
 using automato.Domain.Services.SFTP;
 using automato.Infrastructure.Hangfire;
 using automato.Infrastructure.Sqlite;

@@ -5,6 +5,9 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+# Create a volume for storing application database
+VOLUME /app/data
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["src/automato.App/automato.App.csproj", "src/automato.App/"]

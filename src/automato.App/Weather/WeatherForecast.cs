@@ -1,4 +1,4 @@
-namespace automato.App.Data;
+namespace automato.App.Weather;
 
 public class WeatherForecast
 {
