@@ -31,11 +31,11 @@ public class ScheduledJob : IEntity
 
     public string Name { get; }
 
+    public string CronExpression { get; }
+
     public string ScheduledTaskId { get; }
 
-    public CronExpression CronExpression { get; }
-
-    private ScheduledJob(string id, string name, string scheduledTaskId, CronExpression cronExpression)
+    private ScheduledJob(string id, string name, string scheduledTaskId, string cronExpression)
     {
         Id = id;
         Name = name;

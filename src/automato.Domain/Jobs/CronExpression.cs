@@ -54,7 +54,9 @@ public record CronExpression : IParsable<CronExpression>
             return exceptions;
         }
 
-        return new CronExpression(minute, hour, dayOfMonth, month, dayOfWeek);
+        var stringValue = $"{minute} {hour} {dayOfMonth} {month} {dayOfWeek}";
+
+        return new CronExpression(minute, hour, dayOfMonth, month, dayOfWeek, stringValue);
     }
 
     public string Minute { get; }
@@ -134,13 +136,13 @@ public record CronExpression : IParsable<CronExpression>
 
     public static implicit operator string(CronExpression cronExpression) => cronExpression.Value;
 
-    private CronExpression(string minute, string hour, string dayOfMonth, string month, string dayOfWeek)
+    private CronExpression(string minute, string hour, string dayOfMonth, string month, string dayOfWeek, string value)
     {
         Minute = minute;
         Hour = hour;
         DayOfMonth = dayOfMonth;
         Month = month;
         DayOfWeek = dayOfWeek;
-        Value = $"{Minute} {Hour} {DayOfMonth} {Month} {DayOfWeek}";
+        Value = value;
     }
 }
