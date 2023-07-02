@@ -1,4 +1,3 @@
-using automato.App;
 using automato.App.Data;
 using automato.Domain.Services.SFTP;
 using automato.Infrastructure.Hangfire;
