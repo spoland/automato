@@ -22,6 +22,8 @@ public class AutomatoDbContext : DbContext
             b.Property(e => e.Hostname);
             b.Property(e => e.Password);
             b.Property(e => e.Username);
+
+            b.HasIndex(e => e.Name).IsUnique();
         });
 
         modelBuilder.Entity<ScheduledJob>(
@@ -29,8 +31,10 @@ public class AutomatoDbContext : DbContext
         {
             b.HasKey(e => e.Id);
             b.Property(e => e.Name);
-            b.Property(e => e.ScheduledTaskId);
             b.Property(e => e.CronExpression);
+            b.Property(e => e.ScheduledTaskId);
+
+            b.HasIndex(e => e.Name).IsUnique();
         });
 
         modelBuilder.Entity<SftpDownloadTask>(
@@ -44,6 +48,8 @@ public class AutomatoDbContext : DbContext
             b.Property(e => e.SearchPattern);
             b.Property(e => e.DeleteDownloadedFiles);
             b.Property(e => e.DeleteEmptyDirectories);
+
+            b.HasIndex(e => e.Name).IsUnique();
         });
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AutomatoDbContext).Assembly);
