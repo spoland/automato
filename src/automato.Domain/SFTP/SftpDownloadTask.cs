@@ -3,7 +3,7 @@ using automato.Domain.Framework;
 
 namespace automato.Domain.SFTP;
 
-public class SftpDownloadTask : IEntity
+public class SftpDownloadTask : Framework.Task
 {
     public static Result<SftpDownloadTask> Create(
         string name,
@@ -75,10 +75,6 @@ public class SftpDownloadTask : IEntity
         return exceptions;
     }
 
-    public string Id { get; }
-
-    public string Name { get; }
-
     public string LocalPath { get; }
 
     public string RemotePath { get; }
@@ -108,10 +104,8 @@ public class SftpDownloadTask : IEntity
         string sftpServerId,
         string? searchPattern,
         bool deleteDownloadedFiles,
-        bool deleteEmptyDirectories)
+        bool deleteEmptyDirectories) : base(id, name)
     {
-        Id = id;
-        Name = name;
         LocalPath = localPath;
         RemotePath = remotePath;
         SftpServerId = sftpServerId;
