@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using automato.Domain.Framework;
 
 namespace automato.Domain.Jobs;
 

@@ -1,10 +1,8 @@
-﻿using automato.Domain.Framework;
-
-namespace automato.Domain.Jobs;
+﻿namespace automato.Domain.Jobs;
 
 public class ScheduledJob : IEntity
 {
-    public static Result<ScheduledJob> Create(string name, Framework.Task task, CronExpression cronExpression)
+    public static Result<ScheduledJob> Create(string name, AutomatoTask task, CronExpression cronExpression)
     {
         var validationExceptions = new List<ValidationException>();
 

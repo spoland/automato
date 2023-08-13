@@ -1,9 +1,8 @@
 ﻿using System.Text.RegularExpressions;
-using automato.Domain.Framework;
 
 namespace automato.Domain.SFTP;
 
-public class SftpDownloadTask : Framework.Task
+public class SftpDownloadTask : AutomatoTask
 {
     public static Result<SftpDownloadTask> Create(
         string name,

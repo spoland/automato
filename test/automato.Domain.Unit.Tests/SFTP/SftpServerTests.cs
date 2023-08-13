@@ -1,4 +1,3 @@
-using automato.Domain.Framework;
 using automato.Domain.SFTP;
 
 namespace automato.Domain.Unit.Tests.SFTP;

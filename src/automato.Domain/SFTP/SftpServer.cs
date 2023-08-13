@@ -1,6 +1,4 @@
-﻿using automato.Domain.Framework;
-
-namespace automato.Domain.SFTP;
+﻿namespace automato.Domain.SFTP;
 
 public class SftpServer : IEntity
 {

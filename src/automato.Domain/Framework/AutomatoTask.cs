@@ -1,8 +1,8 @@
 ﻿namespace automato.Domain.Framework;
 
-public abstract class Task : ITask
+public abstract class AutomatoTask : ITask
 {
-    protected Task(string id, string name)
+    protected AutomatoTask(string id, string name)
     {
         if (string.IsNullOrWhiteSpace(id))
         {

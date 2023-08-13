@@ -58,7 +58,7 @@ public class ScheduledJobTests
         result.Exceptions.Should().HaveCount(1);
     }
 
-    private class TestTask : Framework.Task
+    private class TestTask : Framework.AutomatoTask
     {
         public TestTask(string id, string name) : base(id, name)
         {
